@@ -28,15 +28,18 @@ jobs:
             Library-Android-
             Library-
       
+      # 使用 Unity 个人版自动激活
       - name: Build Android APK
         uses: game-ci/unity-builder@v4
         env:
-          UNITY_LICENSE: ${{ secrets.UNITY_LICENSE }}
           UNITY_EMAIL: ${{ secrets.UNITY_EMAIL }}
           UNITY_PASSWORD: ${{ secrets.UNITY_PASSWORD }}
+          # 个人版不需要 UNITY_LICENSE 和 UNITY_SERIAL
         with:
           targetPlatform: Android
           androidAppBundle: false
+          # 添加这些参数避免许可证问题
+          allowDirtyBuild: true
       
       - name: Upload APK
         uses: actions/upload-artifact@v4
